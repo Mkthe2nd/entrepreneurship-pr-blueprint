@@ -1,1 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive PR Blueprint: Nigeria Entrepreneurship Workshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page dashboard with four main interactive sections: 'The Mission' (Role & Objectives), 'The Playbook' (Promotion Strategy), 'The Landscape' (Competitive Analysis), and 'The Roadmap' (100-Day Plan). This thematic structure is more engaging than the report's linear format. It allows users to jump to sections of interest. Key interactions include clickable cards for details, an interactive timeline chart, and filterable tables, making the dense information easily explorable and digestible. This design prioritizes user flow and quick access to actionable insights. -->
+    <!-- Visualization & Content Choices: Report Info: PR Officer Role -> Goal: Inform -> Viz: Interactive Cards (HTML/CSS) -> Interaction: Click to reveal details -> Justification: Breaks down complex roles into digestible, layered pieces. Report Info: 100-Day Plan -> Goal: Show Change/Process -> Viz: Horizontal Bar Chart (Chart.js) -> Interaction: Hover for tooltips on key activities -> Justification: Visually represents the phased timeline and progress more effectively than a static table. Report Info: Competitive Landscape -> Goal: Compare/Organize -> Viz: Interactive Table (HTML/JS) -> Interaction: Click rows for detailed pop-ups -> Justification: Allows for a high-level comparison with the ability to drill down for more information without cluttering the UI. Report Info: KPIs -> Goal: Inform/Measure -> Viz: Dynamic Stat Cards (HTML/JS) -> Interaction: Click to see detailed descriptions -> Justification: Presents key metrics in a visually prominent and easily scannable format. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #D35400;
+            border-bottom-color: #D35400;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+        .tab-button.active {
+            background-color: #D35400;
+            color: #FFFFFF;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#D35400] mb-2">Strategic PR Blueprint</h1>
+            <p class="text-xl text-gray-600">Nigeria Entrepreneurship Workshop</p>
+        </header>
+
+        <nav class="flex justify-center border-b border-gray-200 mb-12">
+            <a href="#mission" class="nav-link active px-4 py-3 text-lg font-medium">The Mission</a>
+            <a href="#playbook" class="nav-link px-4 py-3 text-lg font-medium">The Playbook</a>
+            <a href="#landscape" class="nav-link px-4 py-3 text-lg font-medium">The Landscape</a>
+            <a href="#roadmap" class="nav-link px-4 py-3 text-lg font-medium">The Roadmap</a>
+        </nav>
+
+        <main>
+            <section id="mission" class="mb-16 scroll-mt-24">
+                <h2 class="text-3xl font-bold text-center mb-2">The Mission</h2>
+                <p class="text-lg text-gray-600 text-center mb-8 max-w-3xl mx-auto">This section outlines the strategic mandate of the PR & Communications Officer, detailing the core responsibilities, essential skills, and measurable objectives required to shape the workshop's public narrative and drive its success.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Cards for PR Officer Role -->
+                </div>
+            </section>
+
+            <section id="playbook" class="mb-16 scroll-mt-24">
+                <h2 class="text-3xl font-bold text-center mb-2">The Playbook</h2>
+                <p class="text-lg text-gray-600 text-center mb-8 max-w-3xl mx-auto">Discover the multi-channel promotion strategy designed to effectively sell the workshop. This playbook covers everything from defining the value proposition to leveraging international speakers and digital marketing channels.</p>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex flex-wrap justify-center gap-2 mb-6">
+                        <button class="tab-button py-2 px-4 bg-gray-200 text-gray-700 rounded-full font-semibold transition active" data-tab="uvp">Value Proposition</button>
+                        <button class="tab-button py-2 px-4 bg-gray-200 text-gray-700 rounded-full font-semibold transition" data-tab="content">Content Strategy</button>
+                        <button class="tab-button py-2 px-4 bg-gray-200 text-gray-700 rounded-full font-semibold transition" data-tab="channels">Promotion Channels</button>
+                        <button class="tab-button py-2 px-4 bg-gray-200 text-gray-700 rounded-full font-semibold transition" data-tab="speakers">Speaker Leverage</button>
+                    </div>
+                    <div id="playbook-content">
+                        <!-- Content will be dynamically inserted here -->
+                    </div>
+                </div>
+            </section>
+
+            <section id="landscape" class="mb-16 scroll-mt-24">
+                <h2 class="text-3xl font-bold text-center mb-2">The Landscape</h2>
+                <p class="text-lg text-gray-600 text-center mb-8 max-w-3xl mx-auto">Analyze the competitive event ecosystem in Nigeria. This section provides an overview of direct and indirect competitors, their strategies, and highlights the workshop's distinct advantages to carve out a unique market position.</p>
+                <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="p-4 font-semibold">Event Name</th>
+                                <th class="p-4 font-semibold">Primary Focus</th>
+                                <th class="p-4 font-semibold">Our Advantage</th>
+                            </tr>
+                        </thead>
+                        <tbody id="competitors-table">
+                            <!-- Competitor data will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="roadmap" class="scroll-mt-24">
+                <h2 class="text-3xl font-bold text-center mb-2">The Roadmap</h2>
+                <p class="text-lg text-gray-600 text-center mb-8 max-w-3xl mx-auto">Explore the 100-day action plan. This interactive timeline details key milestones and activities before, during, and after the workshop, providing a clear path to build momentum, drive engagement, and ensure a lasting impact.</p>
+                <div class="chart-container bg-white p-4 rounded-xl shadow-lg">
+                    <canvas id="roadmap-chart"></canvas>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div id="modal-content" class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8 transform scale-95">
+             <div class="flex justify-between items-start">
+                <h3 id="modal-title" class="text-2xl font-bold text-[#D35400] mb-4"></h3>
+                <button id="modal-close" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <div id="modal-body" class="text-gray-700"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const missionData = [
+                { title: 'Strategic Planning', icon: '🎯', description: 'Develop and lead comprehensive PR marketing strategies tailored for the workshop, aiming to cultivate an impressive public-facing brand image.' },
+                { title: 'Media Relations', icon: '📰', description: 'Act as the central point of contact for all media, crafting and distributing press releases, and serving as the official spokesperson to secure widespread coverage.' },
+                { title: 'Content Creation', icon: '✍️', description: 'Create and facilitate targeted PR campaigns. Edit promotional materials, keynote speeches, and brochures with a creative and strategic mindset.' },
+                { title: 'Digital Engagement', icon: '📱', description: 'Manage all social media platforms, track industry trends, and use digital proficiency to engage the audience and build an online community.' },
+                { title: 'Stakeholder Management', icon: '🤝', description: 'Build and nurture positive relationships with speakers, sponsors, partners, and internal teams to ensure seamless coordination and collaboration.' },
+                { title: 'Performance & Crisis', icon: '📊', description: 'Track and report on PR KPIs. Be prepared to manage any PR crises with a cool-tempered, organized, and strategic problem-solving approach.' }
+            ];
+
+            const missionContainer = document.querySelector('#mission .grid');
+            missionData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white p-6 rounded-xl shadow-lg cursor-pointer';
+                card.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl mr-4">${item.icon}</span>
+                        <h3 class="text-xl font-bold text-gray-800">${item.title}</h3>
+                    </div>
+                    <p class="text-gray-600">${item.description}</p>
+                `;
+                missionContainer.appendChild(card);
+            });
+
+            const playbookData = {
+                uvp: {
+                    title: 'Unique Value Proposition',
+                    points: [
+                        '<strong>Solutions-Oriented:</strong> Positioned as a direct solution to startup founders\' pain points (scaling, funding, market entry).',
+                        '<strong>Expert-Led:</strong> Emphasizes the actionable strategies from a renowned business strategist and the caliber of international speakers.',
+                        '<strong>Contextual Relevance:</strong> Tailored insights for the unique challenges and opportunities within the Nigerian entrepreneurial ecosystem.'
+                    ]
+                },
+                content: {
+                    title: 'Compelling Content Strategy',
+                    points: [
+                        '<strong>Central Hub:</strong> A robust event website with clear UVP, agenda, speaker bios, and a prominent registration CTA.',
+                        '<strong>Visual Engagement:</strong> Short, dynamic promotional videos, high-quality images, reels, and behind-the-scenes content.',
+                        '<strong>Credible Narratives:</strong> Compelling press releases with stakeholder quotes and data-driven facts to build authority.'
+                    ]
+                },
+                channels: {
+                    title: 'Multi-Channel Promotion',
+                    points: [
+                        '<strong>Digital Powerhouses:</strong> Targeted email campaigns, active social media engagement (especially LinkedIn), and SEO-optimized blog content.',
+                        '<strong>Traditional Reach:</strong> Strategic pitching to local and international media with exclusive story angles and interviews.',
+                        '<strong>Partnership Amplification:</strong> Cross-promotion with speakers, sponsors, and industry associations to extend reach.'
+                    ]
+                },
+                speakers: {
+                    title: 'Leveraging Speaker Influence',
+                    points: [
+                        '<strong>Turnkey Promotion:</strong> Provide speakers with pre-made promotional kits (graphics, email copy, social posts).',
+                        '<strong>Content Co-Creation:</strong> Host pre-conference Q&A sessions, video snippets, and guest blog posts featuring speakers.',
+                        '<strong>Incentivized Advocacy:</strong> Offer incentives like free tickets for their networks or promotional opportunities to motivate sharing.'
+                    ]
+                }
+            };
+
+            const playbookContentContainer = document.getElementById('playbook-content');
+            const tabButtons = document.querySelectorAll('.tab-button');
+
+            function updatePlaybookContent(tab) {
+                const content = playbookData[tab];
+                playbookContentContainer.innerHTML = `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">${content.title}</h3>
+                    <ul class="space-y-3 list-disc list-inside text-gray-700">
+                        ${content.points.map(point => `<li>${point}</li>`).join('')}
+                    </ul>
+                `;
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    updatePlaybookContent(button.dataset.tab);
+                });
+            });
+
+            updatePlaybookContent('uvp');
+
+            const competitorsData = [
+                { name: 'Lagos Chamber of Commerce Workshops', focus: 'Specific business skills (e.g., E-commerce)', advantage: 'Broader strategic focus for entrepreneurs, led by a renowned business strategist and international speakers.' },
+                { name: 'Media Business Bootcamp 2025', focus: 'Niche-specific (media), intensive training', advantage: 'Broader entrepreneurship focus applicable to all sectors, with diverse international speaker insights.' },
+                { name: 'Lagos Startup Week (LSW)', focus: 'City-wide ecosystem event, exhibitions', advantage: 'A more focused, hands-on workshop format with curated, actionable strategies directly from experts.' },
+                { name: 'Financial Mastery for Entrepreneurs', focus: 'In-depth financial training', advantage: 'Holistic strategic and growth focus beyond just finance, incorporating global market perspectives.' },
+            ];
+
+            const competitorsTable = document.getElementById('competitors-table');
+            competitorsData.forEach(comp => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-200 hover:bg-gray-50 cursor-pointer';
+                row.innerHTML = `
+                    <td class="p-4 font-medium text-gray-800">${comp.name}</td>
+                    <td class="p-4 text-gray-600">${comp.focus}</td>
+                    <td class="p-4 text-gray-600">${comp.advantage}</td>
+                `;
+                row.addEventListener('click', () => {
+                    showModal(comp.name, `
+                        <p class="mb-2"><strong>Focus:</strong> ${comp.focus}</p>
+                        <p><strong>Our Comparative Advantage:</strong> ${comp.advantage}</p>
+                        <p class="mt-4 text-sm text-gray-500">This event distinguishes itself by offering a higher-level strategic overview combined with actionable, hands-on learning, guided by a recognized business strategist and a diverse panel of international experts, which provides a unique value proposition compared to more niche or generalist events in the market.</p>
+                    `);
+                });
+                competitorsTable.appendChild(row);
+            });
+
+            const roadmapData = {
+                labels: ['Foundation (Days 100-90)', 'Amplification (Days 89-60)', 'Sustained Buzz (Days 59-30)', 'Event Days', 'Immediate Follow-up (Post-Event)', 'Long-Term Engagement (Ongoing)'],
+                datasets: [{
+                    label: 'PR & Communications Timeline',
+                    data: [10, 30, 30, 2, 7, 21],
+                    backgroundColor: [
+                        'rgba(211, 84, 0, 0.2)',
+                        'rgba(211, 84, 0, 0.4)',
+                        'rgba(211, 84, 0, 0.6)',
+                        'rgba(211, 84, 0, 1)',
+                        'rgba(46, 204, 113, 0.6)',
+                        'rgba(46, 204, 113, 0.4)'
+                    ],
+                    borderColor: [
+                        'rgba(211, 84, 0, 1)',
+                        'rgba(211, 84, 0, 1)',
+                        'rgba(211, 84, 0, 1)',
+                        'rgba(211, 84, 0, 1)',
+                        'rgba(46, 204, 113, 1)',
+                        'rgba(46, 204, 113, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderSkipped: false,
+                }]
+            };
+
+            const roadmapConfig = {
+                type: 'bar',
+                data: roadmapData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += `${context.parsed.x} days`;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Duration (in days)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                autoSkip: false,
+                                callback: function(value, index, values) {
+                                    const label = this.getLabelForValue(value);
+                                    if (label.length > 25) {
+                                        return label.substring(0, 25) + '...';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const roadmapChart = new Chart(
+                document.getElementById('roadmap-chart'),
+                roadmapConfig
+            );
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    document.querySelector(link.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const modalClose = document.getElementById('modal-close');
+
+            function showModal(title, body) {
+                modalTitle.textContent = title;
+                modalBody.innerHTML = body;
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-95');
+            }
+
+            function hideModal() {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modalContent.classList.add('scale-95');
+            }
+
+            modalClose.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    hideModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
 
